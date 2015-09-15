@@ -1,7 +1,26 @@
 $(document).ready(function() {
-  // This is called after the document has loaded in its entirety
-  // This guarantees that any elements we bind to will exist on the page
-  // when we try to bind to them
 
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+  $(".tab").on("click", function(event){
+    event.preventDefault();
+
+    $(".tab").removeClass("active");
+    $(".container div").hide();
+
+    var $tab = $(this);
+
+    var link = $tab.children()[0];
+    var href = $(link).attr("href");
+
+    $.ajax({
+      url: "/things",
+      dataType: "json",
+      success: function(response) {
+        $(href).text(response.text);
+        $(href).show();
+        $tab.addClass("active");
+      }
+    });
+  })
+
 });
+
